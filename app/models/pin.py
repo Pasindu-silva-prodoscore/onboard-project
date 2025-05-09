@@ -23,7 +23,7 @@ class Pin(db.Model):
         }
 
     @classmethod
-    def get_all(cls, author_filter=None, order_by='date_created', order_dir='desc'):
+    async def get_all(cls, author_filter=None, order_by='date_created', order_dir='desc'):
         query = cls.query
         if author_filter:
             query = query.filter(cls.author.ilike(author_filter))
@@ -34,11 +34,11 @@ class Pin(db.Model):
         return query.all()
 
     @classmethod
-    def get_by_id(cls, pin_id):
+    async def get_by_id(cls, pin_id):
         return cls.query.get(pin_id)
 
     @classmethod
-    def create(cls, pin_data):
+    async def create(cls, pin_data):
         pin = cls(
             title=pin_data["title"],
             body=pin_data["body"],
@@ -51,7 +51,7 @@ class Pin(db.Model):
         return pin
 
     @classmethod
-    def update(cls, pin_id, pin_data):
+    async def update(cls, pin_id, pin_data):
         pin = cls.query.get(pin_id)
         if pin:
             pin.title = pin_data["title"]
@@ -63,7 +63,7 @@ class Pin(db.Model):
         return None
 
     @classmethod
-    def delete(cls, pin_id):
+    async def delete(cls, pin_id):
         pin = cls.query.get(pin_id)
         if pin:
             db.session.delete(pin)

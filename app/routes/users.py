@@ -42,6 +42,11 @@ def login():
 
     access_token = create_jwt_token(user.id, token_type='access')
     refresh_token = create_jwt_token(user.id, token_type='refresh')
+
+    # check the tokens
+    print("token verification")
+    payload = verify_jwt_token(access_token, token_type='access')
+    print(f"Access token payload: {payload}")
     return jsonify({
         "access_token": access_token,
         "refresh_token": refresh_token

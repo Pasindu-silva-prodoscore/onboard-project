@@ -8,5 +8,5 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = os.getenv("FLASK_ENV", "development") == "development"
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "jwt-secret-key")
-    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=5)  
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes=10)  
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=7)    
