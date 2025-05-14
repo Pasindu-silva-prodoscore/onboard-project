@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, abort
 from ..models.user import User
-from ..utils.jwt import create_jwt_token, verify_jwt_token
+from ..utils.jwt_utils import create_jwt_token, verify_jwt_token
 
 users_bp = Blueprint('users', __name__)
 
@@ -43,10 +43,6 @@ def login():
     access_token = create_jwt_token(user.id, token_type='access')
     refresh_token = create_jwt_token(user.id, token_type='refresh')
 
-    # check the tokens
-    print("token verification")
-    payload = verify_jwt_token(access_token, token_type='access')
-    print(f"Access token payload: {payload}")
     return jsonify({
         "access_token": access_token,
         "refresh_token": refresh_token

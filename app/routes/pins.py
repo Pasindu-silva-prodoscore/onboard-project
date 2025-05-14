@@ -7,7 +7,6 @@ pins_bp = Blueprint('pins', __name__)
 
 # GET all pins with filtering and ordering
 @pins_bp.route('/pins', methods=['GET'])
-@authenticate
 async def get_pins():
     author = request.args.get('author')
     order_by = request.args.get('order_by', 'date_created')
@@ -35,6 +34,7 @@ async def get_pin(pin_id):
 
 # POST to create a new pin
 @pins_bp.route('/pins', methods=['POST'])
+@authenticate
 async def create_pin():
     if not request.json:
         abort(400, description="Request body must be JSON")
@@ -55,6 +55,7 @@ async def create_pin():
 
 # PUT to update a pin
 @pins_bp.route('/pins/<int:pin_id>', methods=['PUT'])
+@authenticate
 async def update_pin(pin_id):
     pin = await Pin.get_by_id(pin_id)
     if not pin:
@@ -75,6 +76,7 @@ async def update_pin(pin_id):
 
 # DELETE a pin
 @pins_bp.route('/pins/<int:pin_id>', methods=['DELETE'])
+@authenticate
 async def delete_pin(pin_id):
     if not await Pin.delete(pin_id):
         abort(404, description="Pin not found")
