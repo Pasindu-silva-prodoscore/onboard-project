@@ -35,7 +35,7 @@ class Pin(db.Model):
 
     @classmethod
     async def get_by_id(cls, pin_id):
-        return cls.query.get(pin_id)
+        return db.session.get(Pin, pin_id)
 
     @classmethod
     async def create(cls, pin_data):
@@ -52,7 +52,7 @@ class Pin(db.Model):
 
     @classmethod
     async def update(cls, pin_id, pin_data):
-        pin = cls.query.get(pin_id)
+        pin = db.session.get(Pin, pin_id)
         if pin:
             pin.title = pin_data["title"]
             pin.body = pin_data["body"]
@@ -64,7 +64,7 @@ class Pin(db.Model):
 
     @classmethod
     async def delete(cls, pin_id):
-        pin = cls.query.get(pin_id)
+        pin = db.session.get(Pin, pin_id)
         if pin:
             db.session.delete(pin)
             db.session.commit()

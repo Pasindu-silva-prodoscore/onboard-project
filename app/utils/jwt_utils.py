@@ -23,7 +23,7 @@ def create_jwt_token(user_id, token_type):
     }
 
     secret = current_app.config['JWT_SECRET_KEY']
-    token = jwt.encode(payload, "jwt-secret-key", algorithm='HS256')
+    token = jwt.encode(payload, secret, algorithm='HS256')
     return token
 
 def verify_jwt_token(token, token_type):
