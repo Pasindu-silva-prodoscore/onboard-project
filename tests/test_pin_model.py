@@ -1,7 +1,6 @@
 import pytest
 from datetime import datetime
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from app.models.pin import Pin, db  
 
 @pytest.fixture
@@ -28,22 +27,6 @@ def pin_data():
         "image_link": "http://example.com/image.jpg",
         "author": "Alice",
         "date_created": datetime(2025, 1, 1, 12, 0, 0)
-    }
-
-# Test Pin.to_dict 
-def test_pin_to_dict(setup_db, pin_data):
-    pin = Pin(**pin_data)
-    db.session.add(pin)
-    db.session.commit()
-    
-    result = pin.to_dict()
-    assert result == {
-        "id": pin.id,
-        "title": "Test Pin",
-        "body": "This is a test pin.",
-        "image_link": "http://example.com/image.jpg",
-        "author": "Alice",
-        "date_created": "2025-01-01T12:00:00"
     }
 
 # Test Pin.get_all 

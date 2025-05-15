@@ -9,17 +9,12 @@ pins_bp = Blueprint('pins', __name__)
 @pins_bp.route('/pins', methods=['GET'])
 async def get_pins():
     author = request.args.get('author')
-    order_by = request.args.get('order_by', 'date_created')
     order_dir = request.args.get('order_dir', 'desc')
-
-    valid_fields = ['title', 'date_created', 'author']
-    if order_by not in valid_fields:
-        abort(400, description=f"Invalid order_by field. Must be one of {valid_fields}")
 
     if order_dir not in ['asc', 'desc']:
         abort(400, description="order_dir must be 'asc' or 'desc'")
 
-    pins = await Pin.get_all(author_filter=author, order_by=order_by, order_dir=order_dir)
+    pins = await Pin.get_all(author_filter=author, order_dir=order_dir)
     pins_data = [pin.to_dict() for pin in pins]
 
     return jsonify({"data": pins_data, "count": len(pins_data)}), 200

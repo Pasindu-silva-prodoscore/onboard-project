@@ -23,13 +23,13 @@ class Pin(db.Model):
         }
 
     @classmethod
-    async def get_all(cls, author_filter=None, order_by='date_created', order_dir='desc'):
+    async def get_all(cls, author_filter=None, order_dir='desc'):
         query = cls.query
         if author_filter:
             query = query.filter(cls.author.ilike(author_filter))
         
         order_func = desc if order_dir == 'desc' else asc
-        query = query.order_by(order_func(getattr(cls, order_by)))
+        query = query.order_by(order_func(getattr(cls, 'date_created')))
         
         return query.all()
 

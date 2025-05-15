@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from .utils.errors import register_error_handlers
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -19,7 +20,6 @@ def create_app():
     app.register_blueprint(users_bp, url_prefix='/api/v1')
     app.register_blueprint(pins_bp, url_prefix='/api/v1')
     
-    from .utils.errors import register_error_handlers
     register_error_handlers(app)
     
     return app
