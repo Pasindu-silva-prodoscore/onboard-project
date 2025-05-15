@@ -1,9 +1,7 @@
 import pytest
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from app.routes.users import users_bp  
-from app.models.user import User, db  
-from datetime import datetime
+from app.models.user import db  
 from unittest.mock import patch, Mock
 
 # Fixture to set up Flask app and in-memory database
@@ -16,12 +14,6 @@ def app():
     app.config["JWT_SECRET_KEY"] = "test-secret-key" 
     db.init_app(app)
     app.register_blueprint(users_bp, url_prefix='/api')
-    
-    @app.errorhandler(400)
-    @app.errorhandler(401)
-    @app.errorhandler(404)
-    def error_handler(error):
-        return {"error": str(error.description)}, error.code
 
     return app
 

@@ -1,6 +1,5 @@
 import pytest
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from app.routes.pins import pins_bp  
 from app.models.pin import Pin, db  
 from datetime import datetime
@@ -17,13 +16,6 @@ def app():
     db.init_app(app)
     app.register_blueprint(pins_bp, url_prefix='/api')
     
-    # Custom error handler to return JSON instead of HTML
-    @app.errorhandler(400)
-    @app.errorhandler(401)
-    @app.errorhandler(404)
-    def error_handler(error):
-        return {"error": str(error.description)}, error.code
-
     return app
 
 # Fixture to set up the test client within app context
